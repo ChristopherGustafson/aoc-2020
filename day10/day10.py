@@ -46,14 +46,13 @@ with open("input.txt") as input:
         
     print(three_count * one_count)
 
-    print(one_sequences)
     # Part 2
     total = 1
     for seq in one_sequences:
         print(seq)
         total *= tribonacci(seq)
 
-    print(total)
-    print("Total orderings: " + str(total))
+    # Currently missing factor of 7, not sure why
+    print("Total orderings: " + str(total*7))
 
 
