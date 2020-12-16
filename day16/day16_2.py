@@ -18,8 +18,7 @@ with open("input.txt") as input:
         valid_value[i] = True
       
       fields[splt[0]] = valid_value
-      
-
+    
     #Parse my ticket
     my_ticket = file[1].split("your ticket:\n")
 
@@ -33,7 +32,7 @@ with open("input.txt") as input:
     
     for i, row in enumerate(ticket_rows):
       for field, range in fields.items():
-        print(field)
+        
         correct = True
         for f in row:
           if(not range[f]):
@@ -41,7 +40,7 @@ with open("input.txt") as input:
             break
           
         if(correct):
-          print("FAk u mom")
+          print(field)
           correct_fields[i] = field
           del fields[field]
           break
