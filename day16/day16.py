@@ -45,25 +45,39 @@ with open("input.txt") as input:
     # Create lists of the rows for all tickets
     ticket_rows = [[] for i in range(len(fields))]
 
+    # Create a list with the values of each field for all nearby tickets
     for ticket in valid_tickets:
       for i, row in enumerate(ticket):
         ticket_rows[i].append(int(row))
 
     correct_fields = ["" for i in range(len(fields))]
     
-    for i, row in enumerate(ticket_rows):
-      print(i)
-      for field, range in fields.items():
-        correct = True
-        for f in row:
-          if(not range[f]):
-            correct = False
-            break
-          
-        if(correct):
-          correct_fields[i] = field
-          # del fields[field]
-          break
-        print(field + " not the one")
+    # For every field, check if it matches the rules of a field, if more than one matches skip it
+    # If only one field matches, remove the field and assign it to the current column
+    all_selected = False
+    while(len(fields) > 0):
+      for i, row in enumerate(ticket_rows):
+        correct_fields_t = []
+        for field, range in fields.items(): 
+          correct = True
+          for f in row:
+            if(not range[f]):
+              correct = False
+              break
+            
+          if(correct):
+            correct_fields_t.append(field)
+        
+        # If we find a col where only one field is applicable, assign the col that field and remove field and col from lists
+        if(len(correct_fields_t) == 1):
+          correct_fields[i] = correct_fields_t[0]
+          del fields[correct_fields_t[0]]
+          ticket_rows[i] = []
+        
+    # Multiply all fields in my ticket with the word departure in it
+    result = 1
+    for i, field in enumerate(correct_fields):
+      if "departure" in field:
+        result *= int(my_ticket[i])
 
-    print(correct_fields)
+    print("Product of departure fields: " + str(result))
